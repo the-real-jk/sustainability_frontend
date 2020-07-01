@@ -1,0 +1,19 @@
+/* body {
+  background-image: url(../img/background2.jpg);
+  background-size: cover;
+  background-position: center;
+  background-color: #8c8c8c;
+  background-blend-mode: multiply;
+} */
+
+form div {
+  margin-bottom: 8px;
+}
+
+.formContainer {
+  min-height: 100vh;
+}
+
+.center {
+  text-align: center;
+}
