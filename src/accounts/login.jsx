@@ -2,10 +2,31 @@ import React from "react";
 import "./login.css";
 import "../index.css";
 import TextField from "@material-ui/core/TextField";
-import store from "../app/store";
 import { Grid, Typography, Button } from "@material-ui/core";
+import { connect } from "react-redux";
+
+const axios = require("axios");
 
 export default class Login extends React.Component {
+  async checkUserCredentials(username, password) {
+    axios
+      .post(
+        "/api/login/" +
+          encodeURIComponent(username) +
+          "/" +
+          encodeURIComponent(password)
+      )
+      .then(function (response) {
+        console.log(response);
+        return "";
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  getUsername = (event) => {};
+
   render() {
     return (
       <div>
@@ -34,6 +55,7 @@ export default class Login extends React.Component {
                     label="Username"
                     variant="outlined"
                     fullWidth
+                    onChange=""
                   ></TextField>
                 </div>
               </Grid>
@@ -48,16 +70,17 @@ export default class Login extends React.Component {
                     label="Passwort"
                     variant="outlined"
                     fullWidth
+                    onChange=""
                   ></TextField>
                 </div>
               </Grid>
               <Grid item xs={6}>
                 <div>
                   <Button
-                    type="submit"
+                    type="button"
                     variant="contained"
                     color="primary"
-                    onClick={this.checkUserCredentials}
+                    onClick={this.checkUserCredentials()}
                   >
                     Login
                   </Button>

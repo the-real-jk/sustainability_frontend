@@ -13,6 +13,12 @@ function SustainabilityReducer(state = initialState, action) {
       return { ...state, loggedIn: true, loggedOut: false };
     case "LOGGED_OUT":
       return { ...state, loggedIn: false, loggedOut: true };
+
+    //TODO: Do something with login credentials below
+    //
+    //...code...
+    //
+
     default:
       return state;
   }
