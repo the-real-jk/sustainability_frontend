@@ -10,16 +10,15 @@ function SustainabilityReducer(state = initialState, action) {
 
   switch (action.type) {
     case "LOGGED_IN":
-      return {
+      return Object.assign({}, state, {
         loggedIn: true,
         loggedOut: false,
-      };
+      });
     case "LOGGED_OUT":
-      return {
-        loggedOut: true,
+      return Object.assign({}, state, {
         loggedIn: false,
-      };
-
+        loggedOut: true,
+      });
     default:
       return state;
   }
