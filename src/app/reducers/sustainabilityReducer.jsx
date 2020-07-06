@@ -10,7 +10,6 @@ const initialState = {
 
 function SustainabilityReducer(state = initialState, action) {
   console.log("reducer", state, action);
-
   switch (action.type) {
     case "LOGGED_IN":
       return { ...state, loggedIn: true };
