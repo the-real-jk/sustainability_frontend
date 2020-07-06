@@ -44,7 +44,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  if (getState.loggedOut) {
+  if (!getState.loggedIn) {
     return (
       <div className={classes.root}>
         <AppBar position="static">

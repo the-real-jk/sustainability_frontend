@@ -11,15 +11,10 @@ const axios = require("axios");
 export default class Login extends React.Component {
   async checkUserCredentials(username, password) {
     axios
-      .post(
-        "/api/login", {uname: username, passwd: password}
-          // encodeURIComponent(username) +
-          // "/" +
-          // encodeURIComponent(password)
-      )
+      .post("/api/login", { uname: username, passwd: password })
       .then(function (response) {
         console.log(response);
-        this.props.loggedIn();
+        if (response) this.props.loggedIn();
       })
       .catch(function (error) {
         console.log(error);
@@ -27,14 +22,20 @@ export default class Login extends React.Component {
   }
 
   getUsernameInput() {
-    let username = "";
-    username = document.getElementById("usernameInputLogin").value;
+    let username = document.getElementById("usernameInputLogin").value;
     return username;
   }
   getPasswordInput() {
     let password = document.getElementById("passwordInputLogin").value;
     return password;
   }
+
+  enableButton = () => {
+    let btnLogin = document.getElementById("btnLogin");
+    if (this.getUsernameInput && this.getPasswordInput) {
+      btnLogin.setAttribute("enabled");
+    } else btnLogin.setAttribute("disabled");
+  };
 
   render() {
     return (
@@ -85,6 +86,7 @@ export default class Login extends React.Component {
               <Grid item xs={6}>
                 <div>
                   <Button
+                    id="btnLogin"
                     type="button"
                     variant="contained"
                     color="primary"
