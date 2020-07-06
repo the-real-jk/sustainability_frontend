@@ -12,10 +12,10 @@ export default class Login extends React.Component {
   async checkUserCredentials(username, password) {
     axios
       .post(
-        "/api/login/" +
-          encodeURIComponent(username) +
-          "/" +
-          encodeURIComponent(password)
+        "/api/login", {uname: username, passwd: password}
+          // encodeURIComponent(username) +
+          // "/" +
+          // encodeURIComponent(password)
       )
       .then(function (response) {
         console.log(response);
