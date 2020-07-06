@@ -3,7 +3,7 @@ import "./login.css";
 import "../index.css";
 import TextField from "@material-ui/core/TextField";
 import { Grid, Typography, Button } from "@material-ui/core";
-// import { getLoginCredentials, username } from "../app/actions/actions";
+import { loggedIn, loggedOut } from "../app/actions/actions";
 import { connect } from "react-redux";
 
 const axios = require("axios");
@@ -19,7 +19,7 @@ export default class Login extends React.Component {
       )
       .then(function (response) {
         console.log(response);
-        // return "";
+        this.props.loggedIn();
       })
       .catch(function (error) {
         console.log(error);
@@ -64,11 +64,6 @@ export default class Login extends React.Component {
                     label="Username"
                     variant="outlined"
                     fullWidth
-                    // onChange={(event) =>
-                    //   this.props.getLoginCredentials({
-                    //     username: event.target.value,
-                    //   })
-                    // }
                   ></TextField>
                 </div>
               </Grid>
@@ -112,9 +107,16 @@ export default class Login extends React.Component {
   }
 }
 
-// const mapDispatchToProps = {
-//   getLoginCredentials,
-//   username,
-// };
+function mapStateToProps(state) {
+  return {
+    loggedIn: state.loggedIn,
+    loggedOut: state.loggedOut,
+  };
+}
 
-// export default connect(null, mapDispatchToProps)(Login);
+const mapDispatchToProps = {
+  loggedIn,
+  loggedOut,
+};
+
+connect(mapStateToProps, mapDispatchToProps)(Login);
