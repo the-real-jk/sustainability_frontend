@@ -14,7 +14,7 @@ function SustainabilityReducer(state = initialState, action) {
       return { ...state, loggedIn: true };
     case "LOGGED_OUT":
       return { ...state, loggedIn: false };
-
+    
     default:
       return state;
   }

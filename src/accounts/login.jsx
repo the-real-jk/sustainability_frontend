@@ -5,37 +5,49 @@ import TextField from "@material-ui/core/TextField";
 import { Grid, Typography, Button } from "@material-ui/core";
 import { loggedIn, loggedOut } from "../app/actions/actions";
 import { connect } from "react-redux";
+import { Redirect, Link } from "react-router-dom";
 
 const axios = require("axios");
 
 export default class Login extends React.Component {
+  //called when user clicks login button. validates user input.
   async checkUserCredentials(username, password) {
     axios
       .post("/api/login", { uname: username, passwd: password })
       .then(function (response) {
-        console.log(response);
-        if (response) this.props.loggedIn();
+        console.log(response.data);
+        return "";
       })
       .catch(function (error) {
         console.log(error);
       });
   }
 
+  //get username given by the user
   getUsernameInput() {
     let username = document.getElementById("usernameInputLogin").value;
     return username;
   }
+  //get password given by the user
   getPasswordInput() {
     let password = document.getElementById("passwordInputLogin").value;
     return password;
   }
-
-  enableButton = () => {
-    let btnLogin = document.getElementById("btnLogin");
-    if (this.getUsernameInput && this.getPasswordInput) {
-      btnLogin.setAttribute("enabled");
-    } else btnLogin.setAttribute("disabled");
-  };
+  /* 
+  ======================================================================================
+  TODO: Make code below working.
+  Doesn't work yet. used to redirect user to landing page if login credentials are valid
+  ======================================================================================
+  */
+  handleSubmit() {
+    let validationSuccessful = this.checkUserCredentials(
+      this.getUsernameInput,
+      this.getPasswordInput
+    );
+    if (validationSuccessful === true) {
+      return <Redirect to="/" />;
+    }
+  }
 
   render() {
     return (
@@ -49,11 +61,11 @@ export default class Login extends React.Component {
           direction="column"
           spacing={0}
         >
-          <Grid item xs={12} spacing={0}>
+          <Grid item xs={12}>
             <Typography variant="h2" className="center">
               Login
             </Typography>
-            <form>
+            <form onSubmit={this.handleSubmit}>
               {/* username */}
               <Grid item xs={12}>
                 <div>
@@ -65,6 +77,7 @@ export default class Login extends React.Component {
                     label="Username"
                     variant="outlined"
                     fullWidth
+                    onChange={this.enableButton}
                   ></TextField>
                 </div>
               </Grid>
@@ -87,7 +100,7 @@ export default class Login extends React.Component {
                 <div>
                   <Button
                     id="btnLogin"
-                    type="button"
+                    type="button" //TODO change to type submit and redirect user to landing page if user credentials are valid
                     variant="contained"
                     color="primary"
                     onClick={() =>
