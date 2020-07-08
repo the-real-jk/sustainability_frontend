@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   loginButton: {
     backgroundColor: green,
   },
-  loginLink: {
+  accountLink: {
     color: "#ffffff",
     textDecoration: "none",
   },
@@ -61,9 +61,12 @@ export default function Navbar() {
               Project:Sustainability
             </Typography>
 
-            <Link className={classes.loginLink} to="/login">
+            <Link className={classes.accountLink} to="/register">
+              <Button className={classes.accountLink}>Registrieren</Button>
+            </Link>
+            <Link className={classes.accountLink} to="/login">
               <Button
-                className={classes.loginLink}
+                className={classes.accountLink}
                 onClick={() => dispatch(loggedIn())}
               >
                 Login
@@ -90,7 +93,7 @@ export default function Navbar() {
             Project:Sustainability
           </Typography>
           <Button
-            className={(classes.loginButton, classes.loginLink)}
+            className={(classes.loginButton, classes.accountLink)}
             onClick={() => dispatch(loggedOut())}
           >
             Logout

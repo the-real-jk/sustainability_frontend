@@ -1,9 +1,10 @@
 import React from "react";
 import "./login.css";
-import "../index.css";
+import "../../index.css";
+import "../account.css";
 import TextField from "@material-ui/core/TextField";
 import { Grid, Typography, Button } from "@material-ui/core";
-import { loggedIn, loggedOut } from "../app/actions/actions";
+import { loggedIn, loggedOut } from "../../app/actions/actions";
 import { connect } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 
@@ -51,15 +52,14 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="loginPage">
         {/* login form */}
         <Grid
           container
           className="formContainer"
           justify="center"
           alignItems="center"
-          direction="column"
-          spacing={0}
+          spacing={2}
         >
           <Grid item xs={12}>
             <Typography variant="h2" className="center">
@@ -77,7 +77,6 @@ export default class Login extends React.Component {
                     label="Username"
                     variant="outlined"
                     fullWidth
-                    onChange={this.enableButton}
                   ></TextField>
                 </div>
               </Grid>
@@ -92,11 +91,10 @@ export default class Login extends React.Component {
                     label="Passwort"
                     variant="outlined"
                     fullWidth
-                    onChange=""
                   ></TextField>
                 </div>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs>
                 <div>
                   <Button
                     id="btnLogin"

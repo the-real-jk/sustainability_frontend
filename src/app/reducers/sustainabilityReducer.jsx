@@ -1,10 +1,6 @@
 const initialState = {
   loggedIn: false,
-
-  loginCredentials: {
-    username: "",
-    password: "",
-  },
+  gtc: false,
 };
 
 function SustainabilityReducer(state = initialState, action) {
@@ -14,9 +10,12 @@ function SustainabilityReducer(state = initialState, action) {
       return { ...state, loggedIn: true };
     case "LOGGED_OUT":
       return { ...state, loggedIn: false };
-    
+    case "SWITCH_STATE_CHANGED":
+      return { ...state, gtc: action.payload };
+
     default:
       return state;
   }
 }
+console.log(initialState.gtc);
 export default SustainabilityReducer;
