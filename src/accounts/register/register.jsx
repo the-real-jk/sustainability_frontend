@@ -13,6 +13,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { switchStateChanged } from "../../app/actions/actions";
 import { Link } from "react-router-dom";
+import { addUser } from "../../app/api";
 
 export default function Register() {
   const gtcAccepted = useSelector((state) => state.gtc);
@@ -22,31 +23,6 @@ export default function Register() {
   const handleChange = (event) => {
     let payload = event.target.checked;
     dispatch(switchStateChanged(payload));
-  };
-
-  // const checkLength = (event) => {
-  //   let length = event.target.value.length;
-  //   if (length < 12) {
-  //     document.getElementById("password").setAttribute("helperText", "");
-  //   }
-  // };
-
-  const addUser = async (username, password, firstname, lastname, email) => {
-    axios
-      .post("/api/register", {
-        username: username,
-        passwd: password,
-        fname: firstname,
-        lname: lastname,
-        email: email,
-      })
-      .then(function (response) {
-        console.log(response.data);
-        return "";
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
   };
 
   return (
