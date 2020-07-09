@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import { Grid, Typography, Button } from "@material-ui/core";
 import { loggedIn, loggedOut } from "../../app/actions/actions";
 import { connect } from "react-redux";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const axios = require("axios");
 

@@ -13,12 +13,18 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { switchStateChanged } from "../../app/actions/actions";
 import { Link } from "react-router-dom";
-import { addUser } from "../../app/api";
+import { addUser } from "../../api/account_api";
+import {
+  getFname,
+  getLname,
+  getUsername,
+  getPassword,
+  getEmail,
+} from "./register_logic";
 
 export default function Register() {
   const gtcAccepted = useSelector((state) => state.gtc);
   const dispatch = useDispatch();
-  const axios = require("axios");
 
   const handleChange = (event) => {
     let payload = event.target.checked;
@@ -82,6 +88,7 @@ export default function Register() {
                   type="text"
                   label="Username"
                   variant="outlined"
+                  // onChange={}
                   fullWidth
                 ></TextField>
               </div>
@@ -167,7 +174,15 @@ export default function Register() {
                   type="button" //TODO: change type to submit
                   variant="contained"
                   color="primary"
-                  onClick={addUser} //TODO: Add onClick event
+                  onClick={() =>
+                    addUser(
+                      getUsername,
+                      getPassword,
+                      getFname,
+                      getLname,
+                      getEmail
+                    )
+                  } //TODO: Add onClick event
                   disabled={!gtcAccepted}
                 >
                   Registrieren
