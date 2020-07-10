@@ -12,7 +12,8 @@ function SustainabilityReducer(state = initialState, action) {
       return { ...state, loggedIn: false };
     case "SWITCH_STATE_CHANGED":
       return { ...state, gtc: action.payload };
-
+    case "REDIRECT":
+      return { ...state, redirect: action.payload };
     default:
       return state;
   }

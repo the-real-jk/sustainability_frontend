@@ -11,8 +11,8 @@ import {
   FormControlLabel,
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
-import { switchStateChanged } from "../../app/actions/actions";
-import { Link } from "react-router-dom";
+import { switchStateChanged, redirectTo } from "../../app/actions/actions";
+import { Link, Redirect } from "react-router-dom";
 import { addUser } from "../../api/account_api";
 import {
   getFname,
@@ -23,7 +23,7 @@ import {
 } from "./register_logic";
 
 export default function Register() {
-  const gtcAccepted = useSelector((state) => state.gtc);
+  const getState = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
@@ -31,6 +31,14 @@ export default function Register() {
     dispatch(switchStateChanged(payload));
   };
 
+  const handleSubmit = () => {
+    let link = addUser(getUsername, getPassword, getFname, getLname, getEmail);
+    dispatch(redirectTo(link));
+  };
+
+  if (getState.redirect) {
+    return <Redirect to={getState.redirect} />;
+  }
   return (
     <div className="registrationPage">
       {/* registration form */}
@@ -150,7 +158,7 @@ export default function Register() {
                 <FormControlLabel
                   control={
                     <Switch
-                      checked={gtcAccepted}
+                      checked={getState.gtc}
                       onChange={handleChange}
                       color="primary"
                     />
@@ -174,16 +182,10 @@ export default function Register() {
                   type="button" //TODO: change type to submit
                   variant="contained"
                   color="primary"
-                  onClick={() =>
-                    addUser(
-                      getUsername,
-                      getPassword,
-                      getFname,
-                      getLname,
-                      getEmail
-                    )
-                  } //TODO: Add onClick event
-                  disabled={!gtcAccepted}
+                  onClick={() => {
+                    handleSubmit();
+                  }} //TODO: Add onClick event
+                  disabled={!getState.gtc}
                 >
                   Registrieren
                 </Button>

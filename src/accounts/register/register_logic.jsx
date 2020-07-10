@@ -1,5 +1,3 @@
-import React from "react";
-
 export function getFname() {
   let fname = document.getElementById("firstname").value;
   return fname;

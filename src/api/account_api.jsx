@@ -11,7 +11,7 @@ export async function addUser(username, password, firstname, lastname, email) {
     })
     .then(function (response) {
       console.log(response.data);
-      return "";
+      return "/";
     })
     .catch(function (error) {
       console.log(error);
