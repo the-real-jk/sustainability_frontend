@@ -11,7 +11,10 @@ import {
   FormControlLabel,
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
-import { switchStateChanged, redirectTo } from "../../app/actions/actions";
+import {
+  switchStateChanged,
+  redirectTo,
+} from "../../app/actions/accounts/account_actions";
 import { Link, Redirect } from "react-router-dom";
 import { addUser } from "../../api/account_api";
 import {
@@ -37,8 +40,9 @@ export default function Register() {
   };
 
   if (getState.redirect) {
-    return <Redirect to={getState.redirect} />;
+    return <Redirect to="/" />;
   }
+
   return (
     <div className="registrationPage">
       {/* registration form */}
@@ -179,7 +183,7 @@ export default function Register() {
               <div>
                 <Button
                   id="btnRegister"
-                  type="button" //TODO: change type to submit
+                  type="submit"
                   variant="contained"
                   color="primary"
                   onClick={() => {

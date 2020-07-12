@@ -3,7 +3,7 @@ import {
   LOGGED_OUT,
   SWITCH_STATE_CHANGED,
   REDIRECT,
-} from "./action_constants";
+} from "./account_actions_constants";
 
 export const loggedIn = () => ({ type: LOGGED_IN });
 export const loggedOut = () => ({ type: LOGGED_OUT });

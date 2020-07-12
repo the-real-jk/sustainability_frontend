@@ -4,120 +4,97 @@ import "../../index.css";
 import "../account.css";
 import TextField from "@material-ui/core/TextField";
 import { Grid, Typography, Button } from "@material-ui/core";
-import { loggedIn, loggedOut } from "../../app/actions/actions";
-import { connect } from "react-redux";
+import {
+  loggedIn,
+  loggedOut,
+  redirectTo,
+} from "../../app/actions/accounts/account_actions";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { checkUserCredentials } from "../../api/account_api";
+import { getUsername, getPassword } from "../login/login_logic";
 
-const axios = require("axios");
+export default function Login() {
+  const getState = useSelector((state) => state);
+  const dispatch = useDispatch();
 
-export default class Login extends React.Component {
-  //called when user clicks login button. validates user input.
-  async checkUserCredentials(username, password) {
-    axios
-      .post("/api/login", { uname: username, passwd: password })
-      .then(function (response) {
-        console.log(response.data);
-        return "";
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  //TODO: the problem is, that redux state redirectTo will always be set, as
+  //checkUserCredentials only checks, if the POST-request (!!!!!) was successful. In other
+  //words, checkUserCredentials checks if the request did not cause an error. In this case, redirectTo will be set to /
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let link = checkUserCredentials(getUsername, getPassword);
+
+    dispatch(redirectTo(link));
+  };
+
+  if (getState.redirect) {
+    return <Redirect to={getState.redirect} />;
+  } else {
+    console.log("failed");
   }
 
-  //get username given by the user
-  getUsernameInput() {
-    let username = document.getElementById("usernameInputLogin").value;
-    return username;
-  }
-  //get password given by the user
-  getPasswordInput() {
-    let password = document.getElementById("passwordInputLogin").value;
-    return password;
-  }
-  /* 
-  ======================================================================================
-  TODO: Make code below working.
-  Doesn't work yet. used to redirect user to landing page if login credentials are valid
-  ======================================================================================
-  */
-  handleSubmit() {
-    let validationSuccessful = this.checkUserCredentials(
-      this.getUsernameInput,
-      this.getPasswordInput
-    );
-    if (validationSuccessful === true) {
-      return <Redirect to="/" />;
-    }
-  }
-
-  render() {
-    return (
-      <div className="loginPage">
-        {/* login form */}
-        <Grid
-          container
-          className="formContainer"
-          justify="center"
-          alignItems="center"
-          spacing={2}
-        >
-          <Grid item xs={12}>
-            <Typography variant="h2" className="center">
-              Login
-            </Typography>
-            <form onSubmit={this.handleSubmit}>
-              {/* username */}
-              <Grid item xs={12}>
-                <div>
-                  <TextField
-                    required
-                    id="usernameInputLogin"
-                    autoComplete="off"
-                    type="text"
-                    label="Username"
-                    variant="outlined"
-                    fullWidth
-                  ></TextField>
-                </div>
-              </Grid>
-              {/* password */}
-              <Grid item xs={12}>
-                <div>
-                  <TextField
-                    required
-                    id="passwordInputLogin"
-                    autoComplete="off"
-                    type="password"
-                    label="Passwort"
-                    variant="outlined"
-                    fullWidth
-                  ></TextField>
-                </div>
-              </Grid>
-              <Grid item xs>
-                <div>
-                  <Button
-                    id="btnLogin"
-                    type="button" //TODO change to type submit and redirect user to landing page if user credentials are valid
-                    variant="contained"
-                    color="primary"
-                    onClick={() =>
-                      this.checkUserCredentials(
-                        this.getUsernameInput(),
-                        this.getPasswordInput()
-                      )
-                    }
-                  >
-                    Login
-                  </Button>
-                </div>
-              </Grid>
-            </form>
-          </Grid>
+  return (
+    <div className="loginPage">
+      {/* login form */}
+      <Grid
+        container
+        className="formContainer"
+        justify="center"
+        alignItems="center"
+        spacing={2}
+      >
+        <Grid item xs={12}>
+          <Typography variant="h2" className="center">
+            Login
+          </Typography>
+          <form>
+            {/* username */}
+            <Grid item xs={12}>
+              <div>
+                <TextField
+                  required
+                  id="username"
+                  autoComplete="off"
+                  type="text"
+                  label="Username"
+                  variant="outlined"
+                  fullWidth
+                ></TextField>
+              </div>
+            </Grid>
+            {/* password */}
+            <Grid item xs={12}>
+              <div>
+                <TextField
+                  required
+                  id="passwordInputLogin"
+                  autoComplete="off"
+                  type="password"
+                  label="Passwort"
+                  variant="outlined"
+                  fullWidth
+                ></TextField>
+              </div>
+            </Grid>
+            <Grid item xs>
+              <div>
+                <Button
+                  id="btnLogin"
+                  type="submit" //TODO change to type submit and redirect user to landing page if user credentials are valid
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
+                >
+                  Login
+                </Button>
+              </div>
+            </Grid>
+          </form>
         </Grid>
-      </div>
-    );
-  }
+      </Grid>
+    </div>
+  );
 }
 
 function mapStateToProps(state) {

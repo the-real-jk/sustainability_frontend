@@ -10,7 +10,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { green } from "@material-ui/core/colors";
-import { loggedIn, loggedOut } from "../app/actions/actions";
+import { loggedIn, loggedOut } from "../app/actions/accounts/account_actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,12 +65,7 @@ export default function Navbar() {
               <Button className={classes.accountLink}>Registrieren</Button>
             </Link>
             <Link className={classes.accountLink} to="/login">
-              <Button
-                className={classes.accountLink}
-                onClick={() => dispatch(loggedIn())}
-              >
-                Login
-              </Button>
+              <Button className={classes.accountLink}>Login</Button>
             </Link>
           </Toolbar>
         </AppBar>
